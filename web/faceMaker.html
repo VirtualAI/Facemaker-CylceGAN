@@ -1553,7 +1553,67 @@
             }
 
             function btnSubmit() {
-                submitSingle();
+                for (let i = 0; i < 10; i++) {
+
+                    //Nose
+                    var randomValue = Math.random(0, 100);
+
+                    var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
+                    if (morphingBalance < 0) {
+                        faceMorphingWeights["face"][16] = morphingBalance * -1;
+                        faceMorphingWeights["face"][15] = 0;
+                    } else {
+                        faceMorphingWeights["face"][15] = morphingBalance;
+                        faceMorphingWeights["face"][16] = 0;
+                    }
+
+                    var randomValue = Math.random(0, 100);
+
+                    var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
+                    if (morphingBalance < 0) {
+                        faceMorphingWeights["face"][12] = morphingBalance * -1;
+                        faceMorphingWeights["face"][11] = 0;
+                    } else {
+                        faceMorphingWeights["face"][11] = morphingBalance;
+                        faceMorphingWeights["face"][12] = 0;
+                    }
+
+                    var randomValue = Math.random(0, 100);
+
+                    var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
+                    if (morphingBalance < 0) {
+                        faceMorphingWeights["face"][14] = morphingBalance * -1;
+                        faceMorphingWeights["face"][13] = 0;
+                    } else {
+                        faceMorphingWeights["face"][13] = morphingBalance;
+                        faceMorphingWeights["face"][14] = 0;
+                    }
+
+                    var randomValue = Math.random(0, 100);
+
+                    var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
+                    if (morphingBalance < 0) {
+                        faceMorphingWeights["face"][17] = morphingBalance * -1;
+                        faceMorphingWeights["face"][18] = 0;
+                    } else {
+                        faceMorphingWeights["face"][18] = morphingBalance;
+                        faceMorphingWeights["face"][17] = 0;
+                    }
+
+                    //  setDataCookie("noseShape", randomValue);
+                    //increaseCountOf("noseShape", "Clk");
+
+                    //nose 1615 1211 1413 1718
+
+
+
+                    computeMorphing("face");
+
+
+
+                    submitSingle();
+                }
+
             }
 
             function submitSingle() {
