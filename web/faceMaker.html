@@ -1048,7 +1048,11 @@
                 // infoBoxOpen = false;
                 //$("#alertBoxBackground").fadeOut(200);
                 //openAvatarRenderer();
-                btnLoadFromXML("todo");
+                // var loadTrialID = gup('trialid');
+                // var loadUserUID = gup('useruid');
+                // openAvatarRenderer();
+                showFace = true;
+                // btnLoadFromXML("todo");
 
                 //  $("#okay").click(function() {
                 //    $("#okay").off("click");
@@ -1549,12 +1553,15 @@
             }
 
             function btnSubmit() {
+                submitSingle();
+            }
+
+            function submitSingle() {
                 skipMovement = true;
                 render();
                 skipMovement = false;
                 saveToDisk("Hallo.png");
             }
-
             if (languageMapping == null)
                 var languageMapping = new Array();
 
