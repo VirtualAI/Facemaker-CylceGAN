@@ -1042,51 +1042,18 @@
             }
 
             function checkForCookies() {
-                //console.log($.cookie());
-                //if(parseInt(getDataCookie("userUID")) == 0 ) window.location.href = "index.html"
-                //if(parseInt(getDataCookie("userUID")) == 0 ) console.log("error");
-                //console.log($.cookie());
-                //console.log("canResumeSession: " + $.cookie("canResumeSession"))
-                if ($.cookie("sessionFinished") == 0) {
-                    $("#alertBoxBackground").fadeIn(200);
-                    infoBoxOpen = true;
-                    document.getElementById("alertBoxTitle").innerHTML = languageMapping["oldSession"];
-                    document.getElementById("alertBoxText").innerHTML = languageMapping["restoreSession"] + "<div class='alertBoxButtonBar'><a id='yes' class='button' href='#' width='48px' >" + languageMapping["restoreYes"] + "</a><a id='no' class='button' href='#' width='48px' >" + languageMapping["restoreNo"] + "</a></div>";
 
-                    $("#yes").click(function(e) {
-                        $("#alertBoxBackground").fadeOut(0, function() {
-                            $("#infoBoxBackground").fadeIn(0, function() {
-                                infoBoxOpen = true;
-                                //initArrayfromCookie();
-                                mapCookiesToFace();
-                                loadCounterCookies();
-                            });
-                        });
-                    });
+                remapDataArray();
+                resetAllSlider(true);
+                // infoBoxOpen = false;
+                //$("#alertBoxBackground").fadeOut(200);
+                //openAvatarRenderer();
+                btnLoadFromXML("todo");
 
-                    $("#no").click(function(e) {
-                        $("#alertBoxBackground").fadeOut(200, function() {
-                            //resetAllSlider(true);
-                        });
-                        remapDataArray();
-                        btnLoadFromXML("todo");
-                        resetAllSlider(true);
-                        resetCounterCookies();
-                        $("#okay").click(function() {
-                            $("#okay").off("click");
-                        });
-                        infoBoxOpen = false;
-                    });
+                //  $("#okay").click(function() {
+                //    $("#okay").off("click");
+                //});
 
-                } else {
-                    remapDataArray();
-                    resetAllSlider(true);
-
-                    btnLoadFromXML("todo");
-                    $("#okay").click(function() {
-                        $("#okay").off("click");
-                    });
-                }
 
                 $.cookie("sessionFinished", 0);
 
@@ -1319,7 +1286,7 @@
                                 document.getElementById("alertBoxTitle").innerHTML = languageMapping["error"];
 
                                 $("#alertBox").fadeIn(100, function() {
-                                    $("#continue").click(function(e) {
+                                    $("#contopeninue").click(function(e) {
                                         infoBoxOpen = false;
                                         $("#alertBoxBackground").fadeOut(200);
 
@@ -1582,212 +1549,10 @@
             }
 
             function btnSubmit() {
-
-                setDataCookie("sendClicked", parseInt(getDataCookie("sendClicked")) + 1);
-                $("#alertBoxBackground").fadeIn(200);
-
-                infoBoxOpen = true;
-                document.getElementById("alertBoxTitle").innerHTML = languageMapping["finalQuestions"];
-                $("#innerAlertBox").show();
-                $("#innerAlertBox").empty();
-
-                var finalQuestions = new Array();
-
-                finalQuestions[0] = new Object();
-                finalQuestions[0]["groupName"] = "finalQuestion1";
-                finalQuestions[0]["groupTitle"] = languageMapping["finalQuestion1"];
-                if (theTask != "") finalQuestions[0]["groupTitle"] += " \"" + theTask + "\"";
-                finalQuestions[0]["separator"] = new Array(" ", "3", "2", "1", languageMapping["neutral"], "1", "2", "3", " ");
-                finalQuestions[0]["values"] = new Array("", 3, 2, 1, 0, -1, -2, -3, "");
-                finalQuestions[0]["groupLeft"] = languageMapping["successful"];
-                finalQuestions[0]["groupRight"] = languageMapping["notsuccessful"];
-
-
-                finalQuestions[1] = new Object();
-                finalQuestions[1]["groupName"] = "finalQuestion2";
-                finalQuestions[1]["groupTitle"] = languageMapping["finalQuestion2"];
-                finalQuestions[1]["separator"] = new Array(" ", "3", "2", "1", languageMapping["neutral"], "1", "2", "3", " ");
-                finalQuestions[1]["values"] = new Array("", 3, 2, 1, 0, -1, -2, -3, "");
-                finalQuestions[1]["groupLeft"] = languageMapping["likable"];
-                finalQuestions[1]["groupRight"] = languageMapping["disagreeable"];
-
-                finalQuestions[2] = new Object();
-                finalQuestions[2]["groupName"] = "finalQuestion3";;
-                finalQuestions[2]["groupTitle"] = "";
-                finalQuestions[2]["values"] = new Array("", -3, -2, -1, 0, 1, 2, 3, "");
-                finalQuestions[2]["separator"] = "";
-                finalQuestions[2]["groupLeft"] = languageMapping["unattractive"];
-                finalQuestions[2]["groupRight"] = languageMapping["attractive"];
-
-                finalQuestions[3] = new Object();
-                finalQuestions[3]["groupName"] = "finalQuestion4";
-                finalQuestions[3]["groupTitle"] = ""
-                finalQuestions[3]["values"] = new Array("", -3, -2, -1, 0, 1, 2, 3, "");
-                finalQuestions[3]["separator"] = "";
-                finalQuestions[3]["groupLeft"] = languageMapping["feminine"];
-                finalQuestions[3]["groupRight"] = languageMapping["masculine"];
-
-
-                var renderWidth = 400;
-                var renderHeight = 250;
-
-                $('#container3D').css('width', renderWidth + "px");
-                $('#container3D').css('height', renderHeight + "px");
-
-                camera.aspect = renderWidth / renderHeight;
-
-                var cacheYaw = camTargetYaw;
-                var cachePitch = camTargetPitch;
-                var cacheZoom = targetZoom;
-                var cacheTarget = targetCamHeight;
-
                 skipMovement = true;
-                renderer.setClearColor(0x000000, 1);
-                renderer.alpha = false;
-                camTargetYaw = 1.57;
-                camTargetPitch = 0;
-                targetZoom = 10.0;
-                targetCamHeight = 0;
-
-                camera.updateProjectionMatrix();
-                renderer.setSize(renderWidth, renderHeight);
-                render();
-
-                dataUrl = renderer.domElement.toDataURL("image/jpg");
-
-                $('#container3D').css('width', '100%');
-                $('#container3D').css('height', '100%');
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                camera.aspect = window.innerWidth / window.innerHeight;
-
-                var imageThumb = document.createElement("img");
-                imageThumb.src = dataUrl;
-
-                renderer.alpha = true;
-                camTargetYaw = cacheYaw;
-                camTargetPitch = cachePitch;
-                targetZoom = cacheZoom;
-                targetCamHeight = cacheTarget;
-                renderer.setClearColor(0x000000, 0);
-                camera.updateProjectionMatrix();
                 render();
                 skipMovement = false;
-
-                var divTableRow = document.createElement("div");
-                divTableRow.className = "sp_table_row";
-                var divTableCell = document.createElement("div");
-                divTableCell.className = "sp_table_cell";
-                var divSubTable = document.createElement("div");
-                divSubTable.className = "sp_sub_table";
-                var divImagePlaceholder = document.createElement("div");
-                divImagePlaceholder.className = "imagePlaceholder";
-                var divSubTableRowHeader = document.createElement("div");
-                divSubTableRowHeader.className = "sp_sub_table_row";
-
-                document.getElementById("innerAlertBox").appendChild(divTableRow);
-
-                divTableRow.appendChild(divTableCell);
-                divTableCell.appendChild(divSubTable);
-                divImagePlaceholder.appendChild(imageThumb);
-                divSubTable.appendChild(divImagePlaceholder);
-
-
-
-
-                divSubTable.appendChild(divSubTableRowHeader);
-
-                var _checked = 0;
-
-                if (_checked < 1 || _checked == null || _checked == undefined) {
-                    document.getElementById("alertBoxText").innerHTML = "<span id='innerAlertBoxText'>" + languageMapping["wantToSubmit"] + "</span><p></p><span id='missingYes'></span><a id='no' class='button' href='#' width='48px' >" + languageMapping["submitNo"] + "</a>";
-                    $('input[name="radioGrp_finalQuestion1"]').prop('checked', false);
-                } else {
-                    document.getElementById("alertBoxText").innerHTML = "<span id='innerAlertBoxText'>" + languageMapping["wantToSubmit"] + "</span><p></p>" + "<a id='yes' class='button' href='#' width='48px' >" + languageMapping["submitYes"] + "</a>" + "<a id='no' class='button' href='#' width='48px' >" + languageMapping["submitNo"] + "</a>";
-                    document.getElementById("innerAlertBoxText").innerHTML = languageMapping["pleaseFillOut"];
-                }
-
-                for (var j = 0; j < finalQuestions.length; j++) {
-
-                    var divSubTableRowQuestions = document.createElement("div");
-
-                    if (finalQuestions[j]["groupTitle"] != "") {
-                        var divTheQuestion = document.createElement("div");
-                        divTheQuestion.innerHTML = finalQuestions[j]["groupTitle"];
-                        divTheQuestion.className = "questionWord";
-                        divSubTable.appendChild(divTheQuestion);
-                    }
-
-                    var divSubTableRowSeparator = document.createElement("div");
-
-
-                    if (finalQuestions[j]["separator"] != "") {
-                        for (var i = 0; i < 9; i++) {
-                            var divSubTableCell = document.createElement("div");
-                            divSubTableCell.className = "sp_sub_table_cell";
-
-                            if (i == 0 || i == 8) divSubTableCell.className += " sideTerm";
-                            else divSubTableCell.className += " sp_sub_table_centeredCell sp_sub_table_fixed";
-
-                            divSubTableCell.innerHTML = finalQuestions[j]["separator"][i];
-
-                            divSubTableRowSeparator.appendChild(divSubTableCell);
-                        }
-                    }
-                    divSubTable.appendChild(divSubTableRowSeparator);
-
-                    for (var i = 0; i < 9; i++) {
-                        var divSubTableCell = document.createElement("div");
-                        divSubTableCell.className = "sp_sub_table_cell";
-
-                        if (i == 0 || i == 8) {
-                            divSubTableCell.className += " sideTerm";
-                            divSubTableCell.className += " top_separator";
-                            if (i == 0) {
-                                divSubTableCell.innerHTML = finalQuestions[j]["groupLeft"];
-                                divSubTableCell.className += " sideTermLeft";
-                            }
-                            if (i == 8) divSubTableCell.innerHTML = finalQuestions[j]["groupRight"];
-                        } else {
-                            divSubTableCell.className += " sp_sub_table_centeredCell sp_sub_table_fixed";
-                            divSubTableCell.className += " top_separator";
-                            divSubTableCell.innerHTML = '<input type="radio" name="radioGrp_' + finalQuestions[j]["groupName"] + '" value="' + finalQuestions[j]["values"][i] + '" id="radioBox_' + finalQuestions[j]["groupName"] + '_' + (i - 1) + '" class="css-radiobox" /><label  for="radioBox_' + finalQuestions[j]["groupName"] + '_' + (i - 1) + '" class="css-radiolabel css-correctDistance" />';
-                        }
-                        divSubTableCell.className += " greyed"
-                        divSubTableRowQuestions.appendChild(divSubTableCell);
-                    }
-
-
-                    divSubTable.appendChild(divSubTableRowQuestions);
-                    var isItTrue = false;
-
-                    $('input[name="radioGrp_' + finalQuestions[j]["groupName"] + '"]').click(function(e) {
-
-                        for (var n = 0; n < finalQuestions.length; n++) {
-                            if ($('input[name="radioGrp_' + finalQuestions[n]["groupName"] + '"]:checked').val() == null ||
-                                typeof $('input[name="radioGrp_' + finalQuestions[n]["groupName"] + '"]:checked').val() == 'undefined') {
-                                isItTrue = false;
-                                break;
-                            }
-                            isItTrue = true;
-                        }
-
-                        if (isItTrue == true) {
-                            document.getElementById("missingYes").innerHTML = "<a id='yes' class='button' href='#' >" + languageMapping["submitYes"] + "</a>";
-                            document.getElementById("innerAlertBoxText").innerHTML = languageMapping["pleaseFillOut"];
-
-                            for (var k = 0; k < finalQuestions.length; k++) setDataCookie(finalQuestions[k]["groupName"], $('input[name="radioGrp_' + finalQuestions[k]["groupName"] + '"]:checked').val());
-
-                            $("#yes").click(function(e) {
-                                // submitFaceQuestion();
-                            });
-                        }
-                    });
-                }
-
-                $("#no").click(function(e) {
-                    $("#alertBoxBackground").fadeOut(200);
-                    infoBoxOpen = false;
-                });
+                saveToDisk("Hallo.png");
             }
 
             if (languageMapping == null)
