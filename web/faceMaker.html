@@ -69,7 +69,7 @@
                         <div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="resetUI bigButton" onclick="btnResetUI()"><span id="resetUIBtn">Reset UI</span></input></a></div>
                         <!--<div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="changeTShirt bigButton" onclick="resetAllSlider(true)"><span  id="changeTShirtBigBtn">Change Shirt Color</span></input></a></div>-->
                         <div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="lightButton bigButton" onclick="btnChangeLight()"><span  id="changeLightBigButton">Change Light</span></input></a></div>
-                        <div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="mainInfoButton bigButton" onclick="btnLoadFromXML('todo')"><span  id="faceInfoBigButton">Your task</span></input></a></div>
+                        <!--<div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="mainInfoButton bigButton" onclick="btnLoadFromXML('todo')"><span  id="faceInfoBigButton">Your task</span></input></a></div> -->
                         <div class="ctrlBtnGrpCol"><a class="tooltip tooltiptop" href="#"><input type="button" class="mailButton bigButton" onclick="openMailWithProblem()"><span id="mailWithProblem">Mail with problem</span></input></a></div>
                         <div class="ctrlBtnGrpSeparator"></div>
                         <input id="sendFace" type="button" class="button" value="Submit Face" onclick="btnSubmit()"></input>
@@ -1557,7 +1557,6 @@
 
                     //Nose
                     var randomValue = Math.random(0, 100);
-
                     var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
                     if (morphingBalance < 0) {
                         faceMorphingWeights["face"][16] = morphingBalance * -1;
@@ -1813,6 +1812,8 @@
                     }
                 });
 
+                //Eyes
+
                 $("#slider_eyeColor").ionRangeSlider({
                     values: [languageMapping["black"], languageMapping["brown"], languageMapping["amber"], languageMapping["green"], languageMapping["blue"], languageMapping["brightblue"], languageMapping["grey"]],
                     type: "single",
@@ -1924,18 +1925,20 @@
                 });
 
                 $("#slider_eyeShape").ionRangeSlider({
-                    values: [languageMapping["droopy"], languageMapping["downturned"], languageMapping["round"], languageMapping["oval"], languageMapping["almond"], languageMapping["upturned"], languageMapping["asian"]],
+                   // values: [languageMapping["droopy"], languageMapping["downturned"], languageMapping["round"], languageMapping["oval"], languageMapping["almond"], languageMapping["upturned"], languageMapping["asian"]],
+                    values: [languageMapping["downturned"], languageMapping["round"], languageMapping["oval"], languageMapping["almond"], languageMapping["upturned"]],
                     type: "single",
                     hideFromTo: false,
-                    min: 0,
-                    max: 100,
+                    min: 20,
+                    max: 80,
                     from: 3,
                     hasGrid: true,
                     onChange: function(obj) {
                         var morphingBalance = obj.fromPers / 100;
-                        var segments = 6;
+                        //var segments = 6;
+                        var segments = 4;
                         sliderInUse = true;
-                        if (morphingBalance <= 0.16) { // droopy
+                        /*if (morphingBalance <= 0.16) { // droopy
                             faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = (-(morphingBalance - 0.00) * segments) + 1;
                             faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] = (morphingBalance - 0.00) * segments;
                             faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = 0;
@@ -1943,7 +1946,9 @@
                             faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = 0;
                             faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] = 0;
 
-                        } else if (morphingBalance > 0.16 && morphingBalance <= 0.32) {
+                        } */
+
+                        if (morphingBalance > 0.16 && morphingBalance <= 0.32) {
                             faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = 0;
                             faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] = (-(morphingBalance - 1 / segments) * segments) + 1;
                             faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = ((morphingBalance - 1 / segments) * segments);
@@ -1974,17 +1979,19 @@
                             faceMorphingWeights["face"][40] = faceMorphingWeights["lashes"][2] = 1 - ((morphingBalance - 4 / segments) * segments);
                             faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = ((morphingBalance - 4 / segments) * segments);
                             faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] = 0;
-                        } else {
+                        }
+
+                        /*else {
                             faceMorphingWeights["face"][48] = faceMorphingWeights["lashes"][12] = 0;
                             faceMorphingWeights["face"][47] = faceMorphingWeights["lashes"][13] = 0;
                             faceMorphingWeights["face"][49] = faceMorphingWeights["lashes"][14] = 0;
                             faceMorphingWeights["face"][40] = faceMorphingWeights["lashes"][2] = 0;
                             faceMorphingWeights["face"][50] = faceMorphingWeights["lashes"][15] = 1 - ((morphingBalance - 5 / segments) * segments);
                             faceMorphingWeights["face"][39] = faceMorphingWeights["lashes"][3] = ((morphingBalance - 5 / segments) * segments);
-                        }
+                        }*/
 
                         setDataCookie("eyeShape", obj.fromPers / 100);
-                        //console.log("Eye Shape", obj.fromPers/100);
+                        console.log("Eye Shape", obj.fromPers/ 100);
 
                         increaseCountOf("eyeShape", "Clk");
                         computeMorphing("face");
@@ -2004,7 +2011,8 @@
                     onChange: function(obj) {
                         sliderInUse = true;
                         var morphingBalance = (1 - ((obj.fromPers / 100) + 0.5)) * 2;
-                        if (morphingBalance < 0) {
+                        console.log (morphingBalance);
+                        if (morphingBalance < 0 && morphingBalance >= -0.5) {
                             faceMorphingWeights["face"][55] = faceMorphingWeights["lashes"][17] = 0;
                             faceMorphingWeights["face"][56] = faceMorphingWeights["lashes"][18] = morphingBalance * -1;
                         } else {
@@ -2021,14 +2029,15 @@
                     values: [languageMapping["small"], "normal", languageMapping["big"]],
                     type: "single",
                     hideFromTo: true,
-                    min: 0,
-                    max: 100,
+                    min: 20,
+                    max: 60,
                     from: 1,
                     hasGrid: true,
                     onChange: function(obj) {
                         sliderInUse = true;
                         var morphingBalance = (1 - ((obj.fromPers / 100) + 0.5)) * 2;
-                        if (morphingBalance < 0) {
+                        console.log(morphingBalance);
+                        if (morphingBalance < 0 && morphingBalance >= -0.4) {
                             faceMorphingWeights["face"][43] = faceMorphingWeights["lashes"][7] = faceMorphingWeights["eyes"][2] = faceMorphingWeights["eyes"][2] = morphingBalance * -1;
                             faceMorphingWeights["face"][44] = faceMorphingWeights["lashes"][6] = faceMorphingWeights["eyes"][3] = faceMorphingWeights["eyes"][3] = 0;
                         } else {
@@ -2052,10 +2061,11 @@
                     onChange: function(obj) {
                         sliderInUse = true;
                         var morphingBalance = (1 - ((obj.fromPers / 100) + 0.5)) * 2;
+                        console.log("Morphing Balance", morphingBalance);
                         if (morphingBalance < 0) {
                             faceMorphingWeights["face"][37] = faceMorphingWeights["lashes"][9] = faceMorphingWeights["eyes"][4] = faceMorphingWeights["eyes"][4] = 0;
                             faceMorphingWeights["face"][38] = faceMorphingWeights["lashes"][8] = faceMorphingWeights["eyes"][5] = faceMorphingWeights["eyes"][5] = morphingBalance * -1;
-                        } else {
+                        } else if (morphingBalance > 0 && morphingBalance <= 0.6) {
                             faceMorphingWeights["face"][38] = faceMorphingWeights["lashes"][8] = faceMorphingWeights["eyes"][5] = faceMorphingWeights["eyes"][5] = 0;
                             faceMorphingWeights["face"][37] = faceMorphingWeights["lashes"][9] = faceMorphingWeights["eyes"][4] = faceMorphingWeights["eyes"][4] = morphingBalance;
                         }
@@ -2076,14 +2086,16 @@
                     onChange: function(obj) {
                         sliderInUse = true;
                         var morphingBalance = (1 - ((obj.fromPers / 100) + 0.5)) * 2;
-                        if (morphingBalance < 0) {
+                        console.log("Morphing Balance", morphingBalance);
+                        if (morphingBalance < 0 && morphingBalance >= -0.5) {
                             faceMorphingWeights["face"][46] = faceMorphingWeights["lashes"][10] = faceMorphingWeights["eyes"][7] = faceMorphingWeights["eyes"][7] = morphingBalance * -1;
                             faceMorphingWeights["face"][45] = faceMorphingWeights["lashes"][11] = faceMorphingWeights["eyes"][6] = faceMorphingWeights["eyes"][6] = 0;
-                        } else {
+                        } else if (morphingBalance > 0 && morphingBalance <= 0.6) {
                             faceMorphingWeights["face"][45] = faceMorphingWeights["lashes"][11] = faceMorphingWeights["eyes"][6] = faceMorphingWeights["eyes"][6] = morphingBalance;
                             faceMorphingWeights["face"][46] = faceMorphingWeights["lashes"][10] = faceMorphingWeights["eyes"][7] = faceMorphingWeights["eyes"][7] = 0;
                         }
                         setDataCookie("eyeDistance", obj.fromPers / 100);
+                        console.log("Eye Distance", obj.fromPers/ 100);
 
                         increaseCountOf("eyeDistance", "Clk");
                         computeMorphing("all");
@@ -2101,6 +2113,7 @@
                     onChange: function(obj) {
                         sliderInUse = true;
                         var morphingBalance = (1 - ((obj.fromPers / 100) + 0.5)) * 2;
+                        console.log(morphingBalance);
                         if (morphingBalance < 0) {
                             faceMorphingWeights["face"][41] = faceMorphingWeights["lashes"][4] = faceMorphingWeights["eyes"][9] = faceMorphingWeights["eyes"][9] = morphingBalance * -1;
                             faceMorphingWeights["face"][42] = faceMorphingWeights["lashes"][5] = faceMorphingWeights["eyes"][8] = faceMorphingWeights["eyes"][8] = 0;
@@ -2125,10 +2138,11 @@
                     onChange: function(obj) {
                         sliderInUse = true;
                         var morphingBalance = (1 - ((obj.fromPers / 100) + 0.5)) * 2;
-                        if (morphingBalance < 0) {
+                        console.log(morphingBalance);
+                        if (morphingBalance < 0 && morphingBalance >= -0.55) {
                             faceMorphingWeights["face"][57] = faceMorphingWeights["lashes"][19] = morphingBalance * -1;
                             faceMorphingWeights["face"][58] = faceMorphingWeights["lashes"][20] = 0;
-                        } else {
+                        } else if (morphingBalance > 0 && morphingBalance <= 0.75) {
                             faceMorphingWeights["face"][58] = faceMorphingWeights["lashes"][20] = morphingBalance;
                             faceMorphingWeights["face"][57] = faceMorphingWeights["lashes"][19] = 0;
                         }
