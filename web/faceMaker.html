@@ -1700,7 +1700,7 @@
                     from: 0,
                     hasGrid: true,
                     onChange: function(obj) {
-                        sliderInUse = true;
+                        sliderInUse = false;
                         faceMorphingWeights["plane"][1] = (obj.fromPers / 100) * 1;
                         faceMorphingWeights["lashes"][16] = (obj.fromPers / 100) * 1;
                         faceMorphingWeights["face"][2] = (obj.fromPers / 100) * 1;
@@ -1709,6 +1709,7 @@
 
                         faceMaps["eyes"][1]["opacity"] = 1 - (obj.fromPers / 100);
                         setDataCookie("faceStyle", obj.fromPers / 100);
+                        console.log ("faceStyle", obj,fromPers / 100);
                         increaseCountOf("faceStyle", "Clk");
 
                         computeMorphing("all");
@@ -1717,12 +1718,12 @@
                 });
 
                 $("#slider_skinDetails").ionRangeSlider({
-                    values: [languageMapping["smooth"], "normal", languageMapping["porous"]],
+                    values: ["normal", languageMapping["porous"]],
                     type: "single",
                     hideFromTo: true,
-                    min: 0,
+                    min: 50,
                     max: 100,
-                    from: 1,
+                    from: 50,
                     hasGrid: true,
                     onChange: function(obj) { // callback is called on every slider change
                         sliderInUse = true;
@@ -2489,7 +2490,8 @@
                     onChange: function(obj) {
                         sliderInUse = true;
                         var morphingBalance = (1 - ((obj.fromPers / 100) + 0.5)) * 2;
-                        if (morphingBalance < 0) {
+                        console.log(morphingBalance);
+                        if (morphingBalance < 0 && morphingBalance >= -0.5) {
                             faceMorphingWeights["face"][35] = morphingBalance * -1;
                             faceMorphingWeights["face"][36] = 0;
                         } else {
