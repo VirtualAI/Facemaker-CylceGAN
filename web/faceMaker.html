@@ -1552,11 +1552,20 @@
                 //faceMorphingVerts = undefined;
             }
 
+            // Standard Normal variate using Box-Muller transform.
+            function randn_bm() {
+                var u = 0, v = 0;
+                while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+                while(v === 0) v = Math.random();
+                return (Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v ))/5 + 0.5;
+            }
+
             function btnSubmit() {
                 for (let i = 0; i < 10; i++) {
 
                     //Nose
-                    var randomValue = Math.random(0, 100);
+                    var randomValue = randn_bm();
+                    console.log(randomValue);
                     var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
                     if (morphingBalance < 0) {
                         faceMorphingWeights["face"][16] = morphingBalance * -1;
@@ -1566,7 +1575,7 @@
                         faceMorphingWeights["face"][16] = 0;
                     }
 
-                    var randomValue = Math.random(0, 100);
+                    var randomValue = randn_bm();
 
                     var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
                     if (morphingBalance < 0) {
@@ -1577,7 +1586,7 @@
                         faceMorphingWeights["face"][12] = 0;
                     }
 
-                    var randomValue = Math.random(0, 100);
+                    var randomValue = randn_bm();
 
                     var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
                     if (morphingBalance < 0) {
@@ -1588,7 +1597,7 @@
                         faceMorphingWeights["face"][14] = 0;
                     }
 
-                    var randomValue = Math.random(0, 100);
+                    var randomValue = randn_bm();
 
                     var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
                     if (morphingBalance < 0) {
