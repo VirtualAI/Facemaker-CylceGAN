@@ -20,6 +20,7 @@
 </head>
 
 <body>
+    <script src="js.js"></script>
     <script src="js/jquery/jquery-1.11.0.min.js"></script>
     <script src="js/jquery/jquery-ui.js"></script>
     <script src="js/jquery/jquery-cookie-plugin/jquery.cookie.js"></script>
@@ -1554,72 +1555,16 @@
 
             // Standard Normal variate using Box-Muller transform.
             function randn_bm() {
-                var u = 0, v = 0;
-                while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
-                while(v === 0) v = Math.random();
-                return (Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v ))/5 + 0.5;
+                var u = 0,
+                    v = 0;
+                while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+                while (v === 0) v = Math.random();
+                return (Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v)) / 5 + 0.5;
             }
 
             function btnSubmit() {
                 for (let i = 0; i < 10; i++) {
-
-                    //Nose
-                    var randomValue = randn_bm();
-                    console.log(randomValue);
-                    var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
-                    if (morphingBalance < 0) {
-                        faceMorphingWeights["face"][16] = morphingBalance * -1;
-                        faceMorphingWeights["face"][15] = 0;
-                    } else {
-                        faceMorphingWeights["face"][15] = morphingBalance;
-                        faceMorphingWeights["face"][16] = 0;
-                    }
-
-                    var randomValue = randn_bm();
-
-                    var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
-                    if (morphingBalance < 0) {
-                        faceMorphingWeights["face"][12] = morphingBalance * -1;
-                        faceMorphingWeights["face"][11] = 0;
-                    } else {
-                        faceMorphingWeights["face"][11] = morphingBalance;
-                        faceMorphingWeights["face"][12] = 0;
-                    }
-
-                    var randomValue = randn_bm();
-
-                    var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
-                    if (morphingBalance < 0) {
-                        faceMorphingWeights["face"][14] = morphingBalance * -1;
-                        faceMorphingWeights["face"][13] = 0;
-                    } else {
-                        faceMorphingWeights["face"][13] = morphingBalance;
-                        faceMorphingWeights["face"][14] = 0;
-                    }
-
-                    var randomValue = randn_bm();
-
-                    var morphingBalance = (1 - ((randomValue) + 0.5)) * 2;
-                    if (morphingBalance < 0) {
-                        faceMorphingWeights["face"][17] = morphingBalance * -1;
-                        faceMorphingWeights["face"][18] = 0;
-                    } else {
-                        faceMorphingWeights["face"][18] = morphingBalance;
-                        faceMorphingWeights["face"][17] = 0;
-                    }
-
-                    //  setDataCookie("noseShape", randomValue);
-                    //increaseCountOf("noseShape", "Clk");
-
-                    //nose 1615 1211 1413 1718
-
-
-
-                    computeMorphing("face");
-
-
-
-                    submitSingle();
+                    generateRandom();
                 }
 
             }
@@ -1718,7 +1663,7 @@
 
                         faceMaps["eyes"][1]["opacity"] = 1 - (obj.fromPers / 100);
                         setDataCookie("faceStyle", obj.fromPers / 100);
-                        console.log ("faceStyle", obj,fromPers / 100);
+                        console.log("faceStyle", obj, fromPers / 100);
                         increaseCountOf("faceStyle", "Clk");
 
                         computeMorphing("all");
@@ -1935,7 +1880,7 @@
                 });
 
                 $("#slider_eyeShape").ionRangeSlider({
-                   // values: [languageMapping["droopy"], languageMapping["downturned"], languageMapping["round"], languageMapping["oval"], languageMapping["almond"], languageMapping["upturned"], languageMapping["asian"]],
+                    // values: [languageMapping["droopy"], languageMapping["downturned"], languageMapping["round"], languageMapping["oval"], languageMapping["almond"], languageMapping["upturned"], languageMapping["asian"]],
                     values: [languageMapping["downturned"], languageMapping["round"], languageMapping["oval"], languageMapping["almond"], languageMapping["upturned"]],
                     type: "single",
                     hideFromTo: false,
@@ -2001,7 +1946,7 @@
                         }*/
 
                         setDataCookie("eyeShape", obj.fromPers / 100);
-                        console.log("Eye Shape", obj.fromPers/ 100);
+                        console.log("Eye Shape", obj.fromPers / 100);
 
                         increaseCountOf("eyeShape", "Clk");
                         computeMorphing("face");
@@ -2021,7 +1966,7 @@
                     onChange: function(obj) {
                         sliderInUse = true;
                         var morphingBalance = (1 - ((obj.fromPers / 100) + 0.5)) * 2;
-                        console.log (morphingBalance);
+                        console.log(morphingBalance);
                         if (morphingBalance < 0 && morphingBalance >= -0.5) {
                             faceMorphingWeights["face"][55] = faceMorphingWeights["lashes"][17] = 0;
                             faceMorphingWeights["face"][56] = faceMorphingWeights["lashes"][18] = morphingBalance * -1;
@@ -2105,7 +2050,7 @@
                             faceMorphingWeights["face"][46] = faceMorphingWeights["lashes"][10] = faceMorphingWeights["eyes"][7] = faceMorphingWeights["eyes"][7] = 0;
                         }
                         setDataCookie("eyeDistance", obj.fromPers / 100);
-                        console.log("Eye Distance", obj.fromPers/ 100);
+                        console.log("Eye Distance", obj.fromPers / 100);
 
                         increaseCountOf("eyeDistance", "Clk");
                         computeMorphing("all");
