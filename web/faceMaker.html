@@ -1573,8 +1573,29 @@
                 skipMovement = true;
                 render();
                 skipMovement = false;
-                saveToDisk("Hallo.png");
+
+                // download file like this.
+                var a = document.createElement('a');
+                var fileURL = renderer.domElement.toDataURL("image/png");
+
+                console.log(fileURL);
+                var link = document.createElement("a");
+                var blob = dataURLtoBlob(fileURL);
+                var objurl = URL.createObjectURL(blob);
+
+
+                var d = new Date();
+                var n = d.getTime();
+                link.download = "face_" + n;
+                link.href = objurl;
+                link.click();
+
+                a.click();
+
                 console.log("SAVE");
+
+
+
             }
             if (languageMapping == null)
                 var languageMapping = new Array();
