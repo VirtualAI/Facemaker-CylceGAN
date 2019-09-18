@@ -1563,10 +1563,67 @@
             }
 
             function btnSubmit() {
-                for (let i = 0; i < 10; i++) {
-                    generateRandom();
+                //  submitSingle();
+                saveImage();
+                loadImage();
+                for (let i = 0; i < 1; i++) {
+                    //generateRan
                 }
 
+            }
+
+            function loadImage() {
+                var xmlhttp;
+                if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else { // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var a = document.createElement('a');
+                        var fileURL = "data:image/png;base64," + xmlhttp.responseText;
+
+                        // console.log(fileURL);
+                        var link = document.createElement("a");
+                        var blob = dataURLtoBlob(fileURL);
+                        var objurl = URL.createObjectURL(blob);
+
+
+                        var d = new Date();
+                        var n = d.getTime();
+                        link.download = "face_" + n;
+                        link.href = objurl;
+                        link.click();
+
+                        a.click();
+
+                        console.log("SAVE");
+
+                        // document.getElementById("documentHolder").src = "data:image/png;base64," + xmlhttp.responseText;
+                    }
+                };
+
+                xmlhttp.open("GET", 'testLoad.php?LoadImg=' + "./generate_images/synthetic_images/B/orginal_synthetic.png");
+                xmlhttp.send(null);
+            }
+
+            function saveImage() {
+                var canvasData = renderer.domElement.toDataURL("image/png");
+                var xmlHttpReq = false;
+
+                if (window.XMLHttpRequest) {
+                    ajax = new XMLHttpRequest();
+                } else if (window.ActiveXObject) {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                ajax.open("POST", "testSave.php", false);
+                ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                ajax.onreadystatechange = function() {
+                    console.log(ajax.responseText);
+                }
+                ajax.send("imgData=" + canvasData);
             }
 
             function submitSingle() {
@@ -3671,6 +3728,8 @@
 
                 if (evalMode == true) renderer.setSize(eval3DWidth, eval3DHeight);
                 else renderer.setSize(window.innerWidth, window.innerHeight);
+
+
             }
 
             function addObjectToScene(geometry, scale, skinMaterial) {

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta charset="utf-8" />
+    <title>faceMaker - Generate your favourite avatar!</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>facemaker.uvrg.org | Welcome to faceMaker free online avatar creator, profile picture creator.</title>
+    <meta name="copyright" content="(c) 2015" />
+    <meta name="title" content="faceMaker - free online avatar creator, profile picture creator." />
+    <meta name="description" content=" faceMaker is a free web app to create custom cartoon avatar and profile picture." />
+    <meta name="keywords" content="avatar creator, avatar cartoon, online avatar creator, free avatar creator, create cartoon avatar, avatar creator free, cartoon avatar maker, online avatar games, online avatar, avatar creators, cartoon avatar, online avatar face creator, avatar maker, cartoon face , profile picture creator,avatar builder,cartoon, manga, pickaface, pick a face, face maker, facelift, game" />
+    <meta name="author" content="Valentin Schwind" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" ontent="height = device-height, width = device-width, initial-scale = 1.0, minimum-scale = 1.0,  maximum-scale = 1.0,  user-scalable = no" />
+    <meta property="og:image" content="http://facemaker.uvrg.org/img/logo.jpg">
+    <meta property="og:description" content="Create your own virtual figure">
+    <meta property="og:url" content="http://facemaker.uvrg.org">
+    <link rel="image_src" type="image/jpeg" href="http://facemaker.uvrg.org/img/logo.jpg" />
+    <meta property="og:site_name" content="faceMaker">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="css/chosen.css" />
+    <link rel="stylesheet" href="css/faceMaker.css" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <!--<script src="js/jquery/jquery-2.1.1.min.js"></script>-->
+    <!--<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>-->
+    <!--<script src="js/jquery/jqueryjquery-1.11.2.min.js"></script>-->
+    <script src="js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="js/jquery/jquery-cookie-plugin/jquery.cookie.js"></script>
+    <script src="js/jquery/jquery-chosen-plugin/chosen.jquery.js"></script>
+    <script src="js/three/build/three.min.js"></script>
+    <script src="data/countryList.js"></script>
+
+    <script src="data/dataArray.js"></script>
+
+    <div id="site" class="siteCenter siteStart">
+        <div id="loadingScreen"></div>
+        <div class="header">
+            <div id="logo"></div>
+            <div id="title">
+                <h1>
+                    <div class="accentColor">face</div>Maker</h1>
+                <h2 id="sloagan">Generate your favourite avatar!</h2>
+            </div>
+            <div id="logos">
+                <a target="_blank" href="http://www.hdm-stuttgart.de"><img src="img/Logo_Hochschule_der_Medien_Stuttgart_logo_01.png" /></a>
+                <a target="_blank" href="http://www.uni-stuttgart.de"><img src="img/Logo_Uni-Stuttgart_black-small.png" /></a>
+            </div>
+            <hr></hr>
+
+            <div colspan="5" class="sp_table_desc" id="introText">How your favourite virtual figure looks like? Based on the european <a target="_blank" href="http://faceresearch.org/students/averageness">Average Face</a> you now have the opportunity to design your own favourite avatar. You decide how your game, movie, or cartoon figure looks like.</div>
+        </div>
+        <form id="form" name="form1" method="post" action="">
+            <div id="formTable" class="sp_table">
+                <div id="uiRow_theAge" class="sp_table_row">
+                    <div class="sp_table_cell questionStart" id="ageQuestion">How old are you?</div>
+                    <div class="sp_table_cell">
+                        <select id="theAge" name="theAge" data-placeholder="Choose a your age..." class="chosen-select"></select>
+                    </div>
+                </div>
+                <div id="uiRow_theGender" class="sp_table_row">
+                    <div class="sp_table_cell questionStart" id="genderQuestion">Your gender</div>
+                    <div class="sp_table_cell">
+                        <input type="radio" name="theGender" value="female" id="radioBox_Gender_1" class="css-radiobox" /><label for="radioBox_Gender_1" class="css-radiolabel"><div id="genderQuestionA">female</div></label>
+                        <input type="radio" name="theGender" value="male" id="radioBox_Gender_2" class="css-radiobox" /><label for="radioBox_Gender_2" class="css-radiolabel"><div id="genderQuestionB">male</div></label>
+                        <input type="radio" name="theGender" value="other" id="radioBox_Gender_3" class="css-radiobox" /><label for="radioBox_Gender_3" class="css-radiolabel"><div id="genderQuestionC">other</div></label>
+                    </div>
+                </div>
+
+                <div id="uiRow_theCountry" class="sp_table_row">
+                    <div class="sp_table_cell questionStart" id="countryQuestion">Your home country</div>
+                    <div class="sp_table_cell">
+                        <select name="theCountry" data-placeholder="Choose a Country..." accesskey="2" class="chosen-select-wide"></select>
+                    </div>
+                </div>
+
+                <div id="uiRow_playingGames" class="sp_table_row">
+                    <div class="sp_table_cell questionStart" id="playingQuestion">How often do you play video games?</div>
+                    <div class="sp_table_cell">
+                        <input type="radio" name="playingGames" value="6" id="playingGames6" class="css-radiobox" /><label for="playingGames6" class="css-radiolabel"><div id="playingGames_6">daily</div></label>
+                        <input type="radio" name="playingGames" value="5" id="playingGames5" class="css-radiobox" /><label for="playingGames5" class="css-radiolabel"><div id="playingGames_5">more than once a week</div></label>
+                        <input type="radio" name="playingGames" value="4" id="playingGames4" class="css-radiobox" /><label for="playingGames4" class="css-radiolabel"><div id="playingGames_4">once a week</div></label>
+                        <input type="radio" name="playingGames" value="3" id="playingGames3" class="css-radiobox" /><label for="playingGames3" class="css-radiolabel"><div id="playingGames_3">once a month</div></label>
+                        <input type="radio" name="playingGames" value="2" id="playingGames2" class="css-radiobox" /><label for="playingGames2" class="css-radiolabel"><div id="playingGames_2">infrequently</div></label>
+                        <input type="radio" name="playingGames" value="1" id="playingGames1" class="css-radiobox" /><label for="playingGames1" class="css-radiolabel"><div id="playingGames_1">never</div></label>
+                    </div>
+                </div>
+
+
+                <div id="uiRow_watchingMovies" class="sp_table_row">
+                    <div class="sp_table_cell questionStart" id="movieQuestion">How often do you play video games?</div>
+                    <div class="sp_table_cell">
+                        <input type="radio" name="watchingMovies" value="6" id="radioGrp_watchingMovies_6" class="css-radiobox" /><label for="radioGrp_watchingMovies_6" class="css-radiolabel"><div id="watchingMovies6">daily</div></label>
+                        <input type="radio" name="watchingMovies" value="5" id="radioGrp_watchingMovies_5" class="css-radiobox" /><label for="radioGrp_watchingMovies_5" class="css-radiolabel"><div id="watchingMovies5">more than once a week</div></label>
+                        <input type="radio" name="watchingMovies" value="4" id="radioGrp_watchingMovies_4" class="css-radiobox" /><label for="radioGrp_watchingMovies_4" class="css-radiolabel"><div id="watchingMovies4">once a week</div></label>
+                        <input type="radio" name="watchingMovies" value="3" id="radioGrp_watchingMovies_3" class="css-radiobox" /><label for="radioGrp_watchingMovies_3" class="css-radiolabel"><div id="watchingMovies3">once a month</div></label>
+                        <input type="radio" name="watchingMovies" value="2" id="radioGrp_watchingMovies_2" class="css-radiobox" /><label for="radioGrp_watchingMovies_2" class="css-radiolabel"><div id="watchingMovies2">infrequently</div></label>
+                        <input type="radio" name="watchingMovies" value="1" id="radioGrp_watchingMovies_1" class="css-radiobox" /><label for="radioGrp_watchingMovies_1" class="css-radiolabel"><div id="watchingMovies1">never</div></label>
+                    </div>
+
+                </div>
+                <div id="uiRow_termsOfUse" class="sp_table_row">
+                    <div class="sp_table_cell questionStart" id="termsofuseQuestion">I agree the terms of use*</div>
+                    <div class="sp_table_cell">
+                        <div class="sp_sub_table">
+                            <div class="sp_sub_table_row">
+                                <div class="sp_sub_table_cell sp_sub_table_centeredCell">
+                                    <input type="checkbox" name="checkGrp_TermsOfUse" value="0" id="acceptTOU" class="css-checkbox" /><label for="acceptTOU" class="css-checklabel css-correctDistance"></label>
+                                </div>
+                                <div class="sp_sub_table_cell leftAlignedCell">
+                                    <div class="sp_table_tou" id="termsofuseText">
+                                        *) All information you provide in the questionnaire and upcoming experiment will be treated confidentially and in compliance with data protection regulations. Your answers to the questionnaire will only be used within the research. The data collected in this survey will be used only within this research topic and will not be disclosed to third parties by the University. The presentation of results from the surveys are also published aggregated and therefore do not allow any conclusions on individual people. The results of the scientific evaluation are summarized in anonymous form only and for groups. So no one can see from the results, the person from whom the information submitted.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="submitBar">
+                <div id="submitBarText">Unfortunately, your browser is not supported. Please use Firefox, Chrome, or Opera instead.</div>
+
+            </div>
+        </form>
+        <div class="footer">
+            <div>
+                <span id="hardwareRequirements"></span>
+                <p></p><br />
+                <span id="recommendedBrowser">Recommended browser: </span><a href="https://www.mozilla.org/" target="_blank">Firefox</a><br />
+                <span id="supportedBrowser">Supported browser: </span>Chrome, Opera<br />
+                <span id="notSupportedBrowser">Not supported browser: </span>Internet Explorer, Safari<br />
+            </div>
+            <div>
+                <hr></hr>
+                <div id="credits"><a href="#">Credits</a></div>
+                <div id="footerCopyright"></div>&nbsp;<a href="https://creativecommons.org/licenses/by-sa/3.0/deed.de">CC BY-SA 3.0.</a>
+                <p></p><a id="writeAnEmail" href="mailto:valentin.schwind@vis.uni-stuttgart.de?subject=faceMaker">Questions or problems with this application? Write us an E-Mail.</a>.
+                <!--<a id="aboutUs" href="#">Credits</a>-->
+
+            </div>
+        </div>
+        <div id='infoBoxBackground'>
+            <div id='infoBox'>
+                <div id='infoBoxTitle'></div>
+                <div id='infoBoxImage'></div>
+                <div id='infoBoxText'></div>
+                <div id='buttonHolder'></div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $("#form").remove();
+        $("#loadingScreen").fadeIn(200, function() {
+            $("body").empty();
+            $("body").load("faceMaker.html");
+            //$.cookie("shit",12);
+            //window.location.href = "faceMaker.html";
+
+        });
+    </script>
+
+
+</body>
+</html>
