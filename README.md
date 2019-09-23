@@ -1,3 +1,5 @@
+This application combines facemaker with a neural net CycleGAN.
+
 # facemaker
 
 This application is based on the following publications:
