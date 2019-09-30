@@ -1,9 +1,14 @@
 This application combines facemaker with a neural net CycleGAN.
 
+
 The CycleGAN implementation is based on TensorFlow and Keras, so please install them before running FaceMaker CycleGAN.
+
 TensorFlow:
+
 https://www.tensorflow.org/
+
 Keras:
+
 https://keras.io/
 
 # facemaker
